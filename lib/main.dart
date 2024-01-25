@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_helper/home_screen.dart';
+import 'package:whatsapp_helper/screens/screens.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
