@@ -71,14 +71,9 @@ class DatabaseProvider {
   }
 
   Future<void> deleteItem(int id) async {
-    // Get a reference to the database.
-
-    // Remove the Dog from the database.
     await db.delete(
       'history',
-      // Use a `where` clause to delete a specific dog.
       where: 'id = ?',
-      // Pass the Dog's id as a whereArg to prevent SQL injection.
       whereArgs: [id],
     );
   }
