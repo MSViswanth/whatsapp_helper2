@@ -18,13 +18,9 @@ class Item {
     required this.number,
     required this.dateTime,
   });
+
   Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'text': text,
-      'number': number,
-      'dateTime': dateTime,
-    };
+    return {'id': id, 'text': text, 'number': number, 'dateTime': dateTime};
   }
 
   @override
@@ -35,13 +31,15 @@ class Item {
 
 class DatabaseProvider {
   late Database db;
+
   Future open(String path) async {
     db = await openDatabase(
       path,
       version: 1,
       onCreate: (db, version) async {
         await db.execute(
-            'create table $historyItem ($historyId integer primary key autoincrement, $historyText text not null, $historyNumber text not null, $historyDateTime text not null)');
+          'create table $historyItem ($historyId integer primary key autoincrement, $historyText text not null, $historyNumber text not null, $historyDateTime text not null)',
+        );
       },
     );
   }
@@ -57,24 +55,17 @@ class DatabaseProvider {
   Future<List<Item>> history() async {
     final List<Map<String, dynamic>> maps = await db.query('history');
 
-    return List.generate(
-      maps.length,
-      (index) {
-        return Item(
-          id: maps[index]['id'] as int,
-          text: maps[index]['text'] as String,
-          number: maps[index]['number'] as String,
-          dateTime: maps[index]['dateTime'] as String,
-        );
-      },
-    );
+    return List.generate(maps.length, (index) {
+      return Item(
+        id: maps[index]['id'] as int,
+        text: maps[index]['text'] as String,
+        number: maps[index]['number'] as String,
+        dateTime: maps[index]['dateTime'] as String,
+      );
+    });
   }
 
   Future<void> deleteItem(int id) async {
-    await db.delete(
-      'history',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    await db.delete('history', where: 'id = ?', whereArgs: [id]);
   }
 }

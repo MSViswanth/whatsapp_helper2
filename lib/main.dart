@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_helper/screens/screens.dart';
+import 'package:whatsapp_helper/screens/start_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,10 +16,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'WhatsApp Helper',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.green,
+          // brightness: Brightness.dark,
+        ),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const StartScreen(),
     );
   }
 }
