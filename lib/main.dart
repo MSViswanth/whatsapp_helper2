@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_helper/screens/screens.dart';
 import 'package:whatsapp_helper/screens/start_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:whatsapp_helper/helpers/database_helper.dart';
+import 'package:whatsapp_helper/models/models.dart';
 
 ///Home Page for the app
 class HomeScreen extends StatefulWidget {
@@ -43,7 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
               textStyle: Theme.of(context).textTheme.bodyLarge,
               fontWeight: FontWeight.w900,
               // color: Theme.of(context).textTheme.bodyText1?.color,
-              color: Theme.of(context).primaryColor,
+              color:
+                  Theme.of(context).brightness == Brightness.dark
+                      ? Colors.green
+                      : Theme.of(context).primaryColor,
             ),
           ),
         ),
@@ -62,6 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: TextField(
             controller: textEditingController,
+            onChanged: (text) {
+              textEditingController.text = "+$text";
+            },
             onSubmitted: (value) {
               if (kDebugMode) {
                 print(value);
@@ -98,8 +106,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             margin: const EdgeInsets.all(16.0),
             child: TextButton(
-              onPressed: () {
+              onPressed: () async {
                 _url = Uri.parse('https://wa.me/${textEditingController.text}');
+                final db = await DatabaseHelper.instance.database;
+                db.insert(
+                  'numbers',
+                  Number(
+                    number: textEditingController.text,
+                    dateTime: DateTime.timestamp().toIso8601String(),
+                  ).toMap(),
+                );
                 _launchUrl();
               },
               child: Text(
