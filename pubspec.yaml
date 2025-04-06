@@ -3,7 +3,7 @@ description: "An application to help send WhatsApp messages to people without ha
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.1+2
+version: 1.2.0
 
 environment:
   sdk: '>=3.7.2 <4.0.0'
